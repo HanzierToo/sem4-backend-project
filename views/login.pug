@@ -1,0 +1,29 @@
+doctype html
+html
+    head
+        title Login
+        link(rel="stylesheet", href="/stylesheets/styles.css")
+        script.
+            const error = "#{error}";
+            if (error) {
+                alert(error);
+            }
+    body
+        h1 Login
+
+        form(action="/login", method="POST")
+            .form-group
+                table
+                    tr
+                        td
+                            label(for="loginIdentifier") Username or Email:
+                        td
+                            input(type="text" id="loginIdentifier" name="loginIdentifier" required)
+                    tr
+                        td
+                            label(for="password") Password:
+                        td
+                            input(type="password" id="password" name="password" required)
+                    tr
+                        td
+                            button(type="submit") Log In

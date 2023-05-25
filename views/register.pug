@@ -1,0 +1,39 @@
+doctype html
+html
+    head
+        title Register
+        link(rel="stylesheet", href="/stylesheets/styles.css")
+        script.
+            const error = "#{error}";
+            const success = "#{success}";
+            if (error) {
+                alert(error);
+            }
+            if (success) {
+                alert(success);
+                window.location.href = '/login';
+            }
+    body
+        h1 Register
+
+        form(action="/register", method="POST")
+            .form-group
+                table
+                    tr
+                        td
+                            label(for="username") Username:
+                        td
+                            input(type="text" id="username" name="username" required)
+                    tr
+                        td
+                            label(for="password") Password:
+                        td
+                            input(type="password" id="password" name="password" required)
+                    tr
+                        td
+                            label(for="email") Email:
+                        td
+                            input(type="email" id="email" name="email" required)
+                    tr
+                        td(colspan="2")
+                            button(type="submit") Register

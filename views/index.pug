@@ -1,0 +1,61 @@
+doctype html
+html
+    head
+        title Game Dashboard
+        link(rel="stylesheet", href="/stylesheets/styles.css")
+    body
+        h1 Game Dashboard
+
+        if loggedIn
+            .game-entries
+                if games.length > 0
+                    each game in games
+                        .game
+                            h2= game.title
+                            p Developer: #{game.developer}
+                            p Publisher: #{game.publisher}
+                            p Price (IDR): #{game.price}
+                            p Description: #{game.description}
+
+                    table
+                        tr
+                            form(action="/addGame")
+                                button(type="submit") Add Game
+                        tr
+                            form(action="/addGame")
+                                button(type="submit") Add Game
+                        tr
+                            form(action="/logout" method="POST")
+                                button(type="submit") Log Out
+
+                    if totalPages > 1
+                        .pagination
+                            if currentPage > 1
+                                a(href=`/?page=${currentPage - 1}` class="pagination-button")
+                                    button(type="button" class="pagination-button") <- Previous
+                            else
+                                button(type="button" class="pagination-button" disabled) <- Previous
+
+                            span.page-info | Page (#{currentPage}) of #{totalPages} |
+
+                            if currentPage < totalPages
+                                a(href=`/?page=${currentPage + 1}` class="pagination-button")
+                                    button(type="button" class="pagination-button") Next ->
+                            else
+                                button(type="button" class="pagination-button" disabled) Next ->
+                else
+                    p No games available.
+
+                    table
+                        tr
+                            form(action="/addGame")
+                                button(type="submit") Add Game
+                        tr
+                            form(action="/addGame")
+                                button(type="submit" disabled) Edit Game
+                        tr
+                            form(action="/logout" method="POST")
+                                button(type="submit") Log Out
+
+        else
+            h1 You Are Not Logged In.
