@@ -8,6 +8,10 @@ html
 
         if loggedIn
             .game-entries
+                form(action="/" method="GET")
+                    input(type="text" name="search" placeholder="Search games..." value=searchQuery)
+                    button(type="submit") Search
+
                 if games.length > 0
                     each game in games
                         .game
@@ -16,11 +20,16 @@ html
                             p Publisher: #{game.publisher}
                             p Price (IDR): #{game.price}
                             p Description: #{game.description}
-
+                            table
+                                tr
+                                    a(href=`/editGame?id=${game.game_id}`)
+                                        button(type="button") Edit Game Entry
+                                    form(action="/deleteGame", method="POST", onsubmit="return confirm('Are you sure you want to delete this game?');")
+                                        input(type="hidden", name="gameId", value=game.game_id)
+                                        button(type="submit") Delete Game Entry
+                    br
+                    br
                     table
-                        tr
-                            form(action="/addGame")
-                                button(type="submit") Add Game
                         tr
                             form(action="/addGame")
                                 button(type="submit") Add Game
@@ -50,9 +59,6 @@ html
                         tr
                             form(action="/addGame")
                                 button(type="submit") Add Game
-                        tr
-                            form(action="/addGame")
-                                button(type="submit" disabled) Edit Game
                         tr
                             form(action="/logout" method="POST")
                                 button(type="submit") Log Out

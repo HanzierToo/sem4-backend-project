@@ -1,0 +1,45 @@
+doctype html
+html
+    head
+        title Edit Game Entry
+        link(rel="stylesheet", href="/stylesheets/styles.css")
+    body
+        h1 Edit Game Entry
+
+        form(action=`/editGame`, method="POST")
+            .form-group
+                table
+                    tr
+                        td
+                            label(for="game_id") Game ID:
+                        td
+                            input(type="text" id="game_id" name="game_id" value=game.game_id readonly)
+                    tr
+                        td
+                            label(for="title") Title:
+                        td
+                            input(type="text" id="title" name="title" value=game.title required)
+                    tr
+                        td
+                            label(for="developer") Developer:
+                        td
+                            input(type="text" id="developer" name="developer" value=game.developer required)
+                    tr
+                        td
+                            label(for="publisher") Publisher:
+                        td
+                            input(type="text" id="publisher" name="publisher" value=game.publisher required)
+                    tr
+                        td
+                            label(for="price") Price:
+                        td
+                            input(type="number" id="price" name="price" value=game.price required)
+                    tr
+                        td
+                            label(for="description") Description:
+                        td
+                            textarea(id="description" name="description" required)= game.description
+                    tr
+                        td
+                        td
+                            button(type="submit") Save

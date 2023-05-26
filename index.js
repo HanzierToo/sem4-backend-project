@@ -7,8 +7,16 @@ const addGameRouter = require('./addGame');
 const loginRouter = require('./login');
 const registerRouter = require('./register');
 const logoutRouter = require('./logout');
+const editGameRouter = require('./editGame')
+const deleteGameRouter = require('./deleteGame');
 
-// Configure session middleware
+// Postman Routes -- Returns only JSON
+const findAllRouter = require('./findAll');
+const findOneRouter = require('./findOne');
+const updateRouter = require('./update');
+const createRouter = require('./create');
+const deleteRouter = require('./delete');
+
 app.use(
     session({
         secret: 'your-secret-key',
@@ -17,20 +25,17 @@ app.use(
     })
 );
 
-// Create a MySQL pool to handle database connections
 const pool = mysql.createPool(dbConfig);
 
-// Set the view engine to use Pug templates
 app.set('view engine', 'pug');
-app.set('views', './views'); // Set the views directory path
+app.set('views', './views');
 
-// Parse request body
 app.use(express.urlencoded({ extended: true }));
 
-// Route for the index page
 app.get('/', (req, res) => {
-    const perPage = 2; // Number of games to display per page
-    const page = parseInt(req.query.page) || 1; // Get the current page from query parameter (default: 1)
+    const perPage = 2;
+    const page = parseInt(req.query.page) || 1;
+    const searchQuery = req.query.search || '';
 
     const loggedIn = req.session.loggedIn;
     const userId = req.session.userId;
@@ -40,7 +45,6 @@ app.get('/', (req, res) => {
         return;
     }
 
-    // Fetch total count of games owned by the user
     const totalCountQuery = `SELECT COUNT(*) AS totalCount FROM games WHERE user_id = ${userId}`;
 
     pool.query(totalCountQuery, (error, totalCountResult) => {
@@ -49,19 +53,24 @@ app.get('/', (req, res) => {
         const totalCount = totalCountResult[0].totalCount;
         const totalPages = Math.ceil(totalCount / perPage);
 
-        // Calculate offset and limit for the current page
         const offset = (page - 1) * perPage;
-        const query = `SELECT * FROM games WHERE user_id = ${userId} LIMIT ${perPage} OFFSET ${offset}`;
+        let query = `SELECT * FROM games WHERE user_id = ${userId}`;
+
+        if (searchQuery) {
+            query += ` AND (title LIKE '%${searchQuery}%' OR developer LIKE '%${searchQuery}%' OR publisher LIKE '%${searchQuery}%' OR description LIKE '%${searchQuery}%')`;
+        }
+
+        query += ` LIMIT ${perPage} OFFSET ${offset}`;
 
         pool.query(query, (error, results) => {
             if (error) throw error;
 
-            // Render the 'index.pug' template and pass the games data and pagination details to it
             res.render('index', {
                 games: results,
                 currentPage: page,
                 totalPages: totalPages,
                 loggedIn: loggedIn,
+                searchQuery: searchQuery,
             });
         });
     });
@@ -75,7 +84,20 @@ app.use('/register', registerRouter);
 
 app.use('/logout', logoutRouter);
 
-// Start the server
+app.use('/editGame', editGameRouter);
+
+app.use('/deleteGame', deleteGameRouter);
+
+app.use('/findAll', findAllRouter);
+
+app.use('/findOne', findOneRouter);
+
+app.use('/update', updateRouter);
+
+app.use('/create', createRouter);
+
+app.use('/delete', deleteRouter);
+
 app.listen(3000, () => {
     console.log('Server started on port 3000');
 });
