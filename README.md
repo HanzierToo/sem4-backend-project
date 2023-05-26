@@ -2,16 +2,9 @@
 
 This is a web application made as the Semester project of a Back-End Web Dev. and Tools class. It uses Node.js and Express to connect to a SQL database and perform REST API functionalities alongside displaying a functional, albeit basic, web interface.
 
-### Current Working
+### GUI / Web Interface
 
-| Web | Postman "Soon":tm: |
-|:--:|:--:|
-| Login | N/A |
-| Dashboard | N/A |
-| Registration | N/A |
-| Logout | N/A |
-| Add Game | N/A |
-| N/A | N/A |
+The website is fully functional and is self-linking and self-explanatory. Start the program using `npm run dev` (or your preferred deployment method) and then begin navigation / interaction. Users will need to register and log in before using the game dashboard.
 
 ### JSON-Returning Routes Documentation
 
