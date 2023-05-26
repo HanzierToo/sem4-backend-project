@@ -16,5 +16,5 @@ This is a web application made as the Semester project of a Back-End Web Dev. an
 ### JSON-Returning Routes Documentation
 
 | Route | Method | Description | Parameters | Example Usage |
-|:------||:------||:-----------||:----------||:-------------|
+|:------|:-------|:------------|:-----------|:--------------|
 |/findAll|GET|Retrieve all games|None|http://localhost:3000/findAll|
