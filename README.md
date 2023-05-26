@@ -18,6 +18,6 @@ This is a web application made as the Semester project of a Back-End Web Dev. an
 | Route | Method | Description | Parameters | Example Usage |
 |:------|:-------|:------------|:-----------|:--------------|
 |/findAll|GET|Retrieve all games|None|http://localhost:3000/findAll|
-|/findOne|GET|Find a game by column value|`column` (string): Name of the column to search__`value` (string): Value to search for|http://localhost:3000/findAll|
+|/findOne|GET|Find a game by column value|`column` (string): Name of the column to search<br />`value` (string): Value to search for|http://localhost:3000/findAll|
 |/findAll|GET|Retrieve all games|None|http://localhost:3000/findAll|
 |/findAll|GET|Retrieve all games|None|http://localhost:3000/findAll|
